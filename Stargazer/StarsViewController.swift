@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  StarsViewController.swift
 //  Stargazer
 //
 //  Created by Dongyuan Liu on 2015-04-30.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class StarsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

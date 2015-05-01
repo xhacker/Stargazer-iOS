@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  DiscouverViewController.swift
 //  Stargazer
 //
 //  Created by Dongyuan Liu on 2015-04-30.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class DiscouverViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
