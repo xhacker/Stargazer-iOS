@@ -6,5 +6,5 @@
 //  Copyright (c) 2015 Ela. All rights reserved.
 //
 
-let kGitHubOAuthCliendID = "enter GitHub client ID here..."
+let kGitHubOAuthClientID = "enter GitHub client ID here..."
 let kGitHubOAuthClientSecret = "enter GitHub client secret here..."

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A127FE81AF9D5820057A317 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FE71AF9D5820057A317 /* SignInViewController.swift */; };
 		1A127FEA1AF9D6A20057A317 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FE91AF9D6A20057A317 /* Config.swift */; };
+		1A127FED1AF9E08F0057A317 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FEC1AF9E08F0057A317 /* Constants.swift */; };
 		1A198AC81AF3563C009F9660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A198AC71AF3563C009F9660 /* AppDelegate.swift */; };
 		1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A198AC91AF3563C009F9660 /* DiscouverViewController.swift */; };
 		1A198ACF1AF3563C009F9660 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A198ACD1AF3563C009F9660 /* Main.storyboard */; };
@@ -35,6 +36,8 @@
 		155B52EC41644E3FBE7AB2E8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A127FE71AF9D5820057A317 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		1A127FE91AF9D6A20057A317 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		1A127FEB1AF9E04E0057A317 /* Config.sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.sample.swift; sourceTree = "<group>"; };
+		1A127FEC1AF9E08F0057A317 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1A198AC21AF3563C009F9660 /* Stargazer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stargazer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A198AC61AF3563C009F9660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A198AC71AF3563C009F9660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				1A198AC71AF3563C009F9660 /* AppDelegate.swift */,
+				1A127FEC1AF9E08F0057A317 /* Constants.swift */,
 				1A127FE91AF9D6A20057A317 /* Config.swift */,
+				1A127FEB1AF9E04E0057A317 /* Config.sample.swift */,
 				1AF3EF251AF89966008A47EC /* TabBarViewController.swift */,
 				1A127FE71AF9D5820057A317 /* SignInViewController.swift */,
 				1A198AC91AF3563C009F9660 /* DiscouverViewController.swift */,
@@ -310,6 +315,7 @@
 				1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */,
 				1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */,
 				1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */,
+				1A127FED1AF9E08F0057A317 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

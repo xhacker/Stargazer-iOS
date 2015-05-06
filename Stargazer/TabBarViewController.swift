@@ -18,8 +18,8 @@ class TabBarViewController: UITabBarController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        let keychain = Keychain(service: "build.ela.Stargazer")
-        if keychain.get("github-token") == nil {
+        let keychain = Keychain(service: kKeychainServiceName)
+        if keychain[kKeychainGitHubTokenKey] == nil {
             performSegueWithIdentifier("signIn", sender: self)
         }
     }

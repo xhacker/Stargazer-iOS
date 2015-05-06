@@ -23,7 +23,7 @@ class SignInViewController: UIViewController {
     
 
     @IBAction func signInPressed(sender: AnyObject) {
-        let URLString = "https://github.com/login/oauth/authorize?client_id=\(kGitHubOAuthCliendID)"
+        let URLString = "https://github.com/login/oauth/authorize?client_id=\(kGitHubOAuthClientID)"
         UIApplication.sharedApplication().openURL(NSURL(string: URLString)!)
     }
 

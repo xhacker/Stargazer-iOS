@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import KeychainAccess
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +19,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         return true
     }
-
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        let urlComponents = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+        if let queryItem = urlComponents?.queryItems?.first as? NSURLQueryItem, code = queryItem.value {
+            let URL = NSURL(string: "https://github.com/login/oauth/access_token")!
+            let URLRequest = NSMutableURLRequest(URL: URL)
+            URLRequest.HTTPMethod = "POST"
+            
+            let parameters = ["client_id": kGitHubOAuthClientID, "client_secret": kGitHubOAuthClientSecret, "code": code]
+            var JSONSerializationError: NSError? = nil
+            URLRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: &JSONSerializationError)
+            URLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            URLRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+            
+            Alamofire.request(URLRequest).responseJSON { (_, _, JSON, error) in
+                if let JSON = JSON as? [String: String] {
+                    println(JSON["access_token"])
+                    
+                    let keychain = Keychain(service: kKeychainServiceName)
+                    keychain[kKeychainGitHubTokenKey] = JSON["access_token"]
+                }
+            }
+        }
+        return true
+    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
