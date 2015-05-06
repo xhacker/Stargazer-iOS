@@ -168,10 +168,10 @@
             </objects>
             <point key="canvasLocation" x="750" y="534"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="Iv5-q1-0UV">
             <objects>
-                <viewController id="m3l-5I-Jpp" sceneMemberID="viewController">
+                <viewController id="m3l-5I-Jpp" customClass="SignInViewController" customModule="Stargazer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uQN-L0-HWy"/>
                         <viewControllerLayoutGuide type="bottom" id="v23-lS-k3T"/>
@@ -191,6 +191,9 @@
                                 <state key="normal" title="Sign In GitHub Account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signInPressed:" destination="m3l-5I-Jpp" eventType="touchUpInside" id="yfe-kw-qxI"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
