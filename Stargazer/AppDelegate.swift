@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     let keychain = Keychain(service: kKeychainServiceName)
                     keychain[kKeychainGitHubTokenKey] = JSON["access_token"]
+                    Router.OAuthToken = JSON["access_token"]
                 }
             }
         }
