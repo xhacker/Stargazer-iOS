@@ -20,17 +20,17 @@ class StarListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         
         fetchStars()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func fetchStars() {
         Client.sharedInstance.getStarred() { stars in
-            self.stars = stars
+            self.stars.extend(stars)
         }
     }
 

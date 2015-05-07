@@ -38,7 +38,7 @@
                             <constraint firstAttribute="centerY" secondItem="KQZ-1w-vlD" secondAttribute="centerY" id="exm-UA-ej4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Discouver" image="discover" selectedImage="discover-active" id="acW-dT-cKf">
+                    <tabBarItem key="tabBarItem" title="Discouver" image="discover" id="acW-dT-cKf">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="discover-active"/>
                         </userDefinedRuntimeAttributes>
