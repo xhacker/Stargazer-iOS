@@ -38,7 +38,11 @@
                             <constraint firstAttribute="centerY" secondItem="KQZ-1w-vlD" secondAttribute="centerY" id="exm-UA-ej4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Discouver" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Discouver" image="discover" selectedImage="discover-active" id="acW-dT-cKf">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="discover-active"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -186,7 +190,11 @@
         <scene sceneID="OHp-DL-JZZ">
             <objects>
                 <navigationController id="mO7-wf-aFq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="upy-Ml-leh"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="upy-Ml-leh">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="settings-active"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vfv-ha-BAe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -203,7 +211,11 @@
         <scene sceneID="YVY-fK-jqV">
             <objects>
                 <navigationController id="pzf-By-ljc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stars" image="first" id="cba-4f-gV7"/>
+                    <tabBarItem key="tabBarItem" title="Stars" image="stars" id="cba-4f-gV7">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="stars-active"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1kk-1r-6j8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -276,6 +288,12 @@
     </scenes>
     <resources>
         <image name="avatar" width="156" height="156"/>
-        <image name="first" width="30" height="30"/>
+        <image name="discover" width="30" height="30"/>
+        <image name="discover-active" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
+        <image name="settings-active" width="30" height="30"/>
+        <image name="stars" width="30" height="30"/>
+        <image name="stars-active" width="30" height="30"/>
     </resources>
+    <color key="tintColor" red="0.23137254901960785" green="0.47843137254901963" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
 </document>
