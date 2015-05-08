@@ -83,8 +83,8 @@ class Client: NSObject {
                     "description": starItem["description"].stringValue,
                     "html_url": starItem["html_url"].stringValue,
                     "language": starItem["language"].stringValue,
-                    "forks_count": starItem["language"].intValue,
-                    "stargazers_count": starItem["language"].intValue,
+                    "forks_count": starItem["forks_count"].intValue,
+                    "stargazers_count": starItem["stargazers_count"].intValue,
                 ])
             }
             

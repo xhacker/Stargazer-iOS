@@ -45,9 +45,12 @@ class StarListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! StarListTableViewCell
         
-        cell.textLabel?.text = stars[indexPath.row]["name"] as? String
+        let starItem = stars[indexPath.row]
+        cell.nameLabel.text = starItem["name"] as? String
+        cell.starsLabel.text = toString(starItem["stargazers_count"] as? Int ?? 0)
+        cell.descriptionLabel.text = starItem["description"] as? String
 
         return cell
     }
