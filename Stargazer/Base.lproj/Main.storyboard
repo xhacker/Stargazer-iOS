@@ -70,6 +70,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="QeU-hl-u9G" kind="show" id="LcE-eh-O5E"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -81,6 +84,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="65h-Pa-kpc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2018" y="534"/>
+        </scene>
+        <!--Star Web View Controller-->
+        <scene sceneID="HKi-aL-n8R">
+            <objects>
+                <viewController id="QeU-hl-u9G" customClass="StarWebViewController" customModule="Stargazer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XVe-pk-mu0"/>
+                        <viewControllerLayoutGuide type="bottom" id="PdP-gg-gzs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kD5-Ya-z8y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJ0-KC-WDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2569" y="534"/>
         </scene>
         <!--Stars-->
         <scene sceneID="k7S-Lg-1Go">

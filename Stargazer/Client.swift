@@ -65,19 +65,27 @@ enum Router: URLRequestConvertible {
 class Client: NSObject {
     static let sharedInstance = Client()
     
-    func getStarred(success: (stars: [[String: String]]) -> Void) {
+    func getStarred(success: (stars: [[String: AnyObject]]) -> Void) {
         Alamofire.request(Router.Starred()).responseJSON { (request, response, jsonObject, error) in
             self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
         }
     }
     
-    func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, success: (stars: [[String: String]]) -> Void) -> Void {
+    func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, success: (stars: [[String: AnyObject]]) -> Void) -> Void {
         if let jsonObject = jsonObject as? NSArray {
             let json = JSON(jsonObject)
-            var stars: [[String: String]] = []
+            var stars: [[String: AnyObject]] = []
             
             for (index: String, starItem: JSON) in json {
-                stars.append(["name": starItem["name"].stringValue])
+                stars.append([
+                    "name": starItem["name"].stringValue,
+                    "full_name": starItem["full_name"].stringValue,
+                    "description": starItem["description"].stringValue,
+                    "html_url": starItem["html_url"].stringValue,
+                    "language": starItem["language"].stringValue,
+                    "forks_count": starItem["language"].intValue,
+                    "stargazers_count": starItem["language"].intValue,
+                ])
             }
             
             success(stars: stars)

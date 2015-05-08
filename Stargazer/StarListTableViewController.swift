@@ -9,7 +9,7 @@
 import UIKit
 
 class StarListTableViewController: UITableViewController {
-    var stars: [[String: String]] = [] {
+    var stars: [[String: AnyObject]] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -47,7 +47,7 @@ class StarListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         
-        cell.textLabel?.text = stars[indexPath.row]["name"]
+        cell.textLabel?.text = stars[indexPath.row]["name"] as? String
 
         return cell
     }
@@ -72,14 +72,15 @@ class StarListTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        let indexPath = tableView.indexPathForSelectedRow()!
+        let starItem = stars[indexPath.row]
+        
+        let webViewController = segue.destinationViewController as! StarWebViewController
+        webViewController.title = starItem["name"] as? String
+        webViewController.URLString = starItem["html_url"] as? String
     }
-    */
 
 }
