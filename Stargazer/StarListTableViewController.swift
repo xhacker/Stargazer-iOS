@@ -49,6 +49,8 @@ class StarListTableViewController: UITableViewController {
         
         let starItem = stars[indexPath.row]
         cell.nameLabel.text = starItem["name"] as? String
+        cell.languageLabel.text = starItem["language"] as? String
+        cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
         cell.starsLabel.text = toString(starItem["stargazers_count"] as? Int ?? 0)
         cell.descriptionLabel.text = starItem["description"] as? String
 

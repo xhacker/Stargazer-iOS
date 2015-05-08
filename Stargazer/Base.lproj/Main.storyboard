@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Discouver-->
@@ -57,39 +58,68 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="76" id="LdM-OR-Lvg" customClass="StarListTableViewCell" customModule="Stargazer" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="77" id="LdM-OR-Lvg" customClass="StarListTableViewCell" customModule="Stargazer" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LdM-OR-Lvg" id="kec-TT-VJf">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEAChart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30v-14-sLp">
-                                            <rect key="frame" x="15" y="7" width="216" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEAChart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30v-14-sLp">
+                                            <rect key="frame" x="8" y="8" width="76" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="250" constant="216" id="V7y-Ic-Wt0"/>
+                                                <constraint firstAttribute="height" constant="21" id="aRV-mS-olY"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Simple and intuitive iOS chart library, for Pomotodo app. Contribution graph, clock chart, and bar chart. The APIs are not ..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyM-sY-XDD">
-                                            <rect key="frame" x="15" y="30" width="274" height="36"/>
+                                            <rect key="frame" x="15" y="31" width="274" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.56470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="726" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJH-Vq-wY7">
-                                            <rect key="frame" x="212" y="7" width="57" height="21"/>
+                                            <rect key="frame" x="212" y="8" width="57" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="★" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j5n-PF-lGq">
-                                            <rect key="frame" x="266" y="7" width="21" height="21"/>
+                                            <rect key="frame" x="266" y="8" width="21" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="36" placeholderIntrinsicHeight="16" text="objc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQo-VE-bWE" customClass="LanguageLabel" customModule="Stargazer" customModuleProvider="target">
+                                            <rect key="frame" x="92" y="11" width="36" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="250" constant="35" id="8jv-g7-4qQ"/>
+                                                <constraint firstAttribute="height" constant="16" id="qV9-I4-79N"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="bQo-VE-bWE" firstAttribute="leading" secondItem="30v-14-sLp" secondAttribute="trailing" constant="8" id="CTG-qq-g1q"/>
+                                        <constraint firstItem="30v-14-sLp" firstAttribute="leading" secondItem="kec-TT-VJf" secondAttribute="leadingMargin" id="Mvg-LR-8o2"/>
+                                        <constraint firstItem="30v-14-sLp" firstAttribute="leading" secondItem="kec-TT-VJf" secondAttribute="leadingMargin" constant="4" id="OdN-Ya-A4t"/>
+                                        <constraint firstItem="30v-14-sLp" firstAttribute="leading" secondItem="kec-TT-VJf" secondAttribute="leadingMargin" constant="7" id="isV-Se-S68"/>
+                                        <constraint firstItem="30v-14-sLp" firstAttribute="top" secondItem="kec-TT-VJf" secondAttribute="topMargin" id="lnX-NO-Q9G"/>
+                                        <constraint firstItem="bQo-VE-bWE" firstAttribute="top" secondItem="kec-TT-VJf" secondAttribute="topMargin" constant="3" id="wxI-ZE-Vj3"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="OdN-Ya-A4t"/>
+                                            <exclude reference="isV-Se-S68"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="descriptionLabel" destination="wyM-sY-XDD" id="ueB-51-hgZ"/>
+                                    <outlet property="languageLabel" destination="bQo-VE-bWE" id="P2S-gW-L34"/>
                                     <outlet property="nameLabel" destination="30v-14-sLp" id="6YU-4G-g3V"/>
                                     <outlet property="starsLabel" destination="dJH-Vq-wY7" id="3Di-kC-jWk"/>
                                     <segue destination="QeU-hl-u9G" kind="show" id="LcE-eh-O5E"/>

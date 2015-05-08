@@ -20,6 +20,8 @@
 		1A198AE01AF3563C009F9660 /* StargazerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A198ADF1AF3563C009F9660 /* StargazerTests.swift */; };
 		1A2253861AFC828500BC1364 /* StarWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2253851AFC828500BC1364 /* StarWebViewController.swift */; };
 		1A2253881AFC8DC500BC1364 /* StarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2253871AFC8DC500BC1364 /* StarListTableViewCell.swift */; };
+		1A22538A1AFC984300BC1364 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2253891AFC984300BC1364 /* Misc.swift */; };
+		1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */; };
 		1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */; };
 		1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */; };
 		1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF3EF251AF89966008A47EC /* TabBarViewController.swift */; };
@@ -56,6 +58,8 @@
 		1A198ADF1AF3563C009F9660 /* StargazerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StargazerTests.swift; sourceTree = "<group>"; };
 		1A2253851AFC828500BC1364 /* StarWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWebViewController.swift; sourceTree = "<group>"; };
 		1A2253871AFC8DC500BC1364 /* StarListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarListTableViewCell.swift; sourceTree = "<group>"; };
+		1A2253891AFC984300BC1364 /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageLabel.swift; sourceTree = "<group>"; };
 		1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTableViewController.swift; sourceTree = "<group>"; };
 		1AF3EF251AF89966008A47EC /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 				1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */,
 				1A127FEE1AF9E7060057A317 /* StarListTableViewController.swift */,
 				1A2253871AFC8DC500BC1364 /* StarListTableViewCell.swift */,
+				1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */,
 				1A2253851AFC828500BC1364 /* StarWebViewController.swift */,
 			);
 			name = Stars;
@@ -151,6 +156,7 @@
 				1A127FF01AF9E7100057A317 /* Stars */,
 				1A127FF21AF9E7280057A317 /* Settings */,
 				1A198ACD1AF3563C009F9660 /* Main.storyboard */,
+				1A2253891AFC984300BC1364 /* Misc.swift */,
 				1A198AD01AF3563C009F9660 /* Images.xcassets */,
 				1A198AD21AF3563C009F9660 /* LaunchScreen.xib */,
 				1A198AC51AF3563C009F9660 /* Supporting Files */,
@@ -356,7 +362,9 @@
 				1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */,
 				1A127FE81AF9D5820057A317 /* SignInViewController.swift in Sources */,
 				1A127FEA1AF9D6A20057A317 /* Config.swift in Sources */,
+				1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */,
 				1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */,
+				1A22538A1AFC984300BC1364 /* Misc.swift in Sources */,
 				1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */,
 				1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */,
 				1A2253881AFC8DC500BC1364 /* StarListTableViewCell.swift in Sources */,

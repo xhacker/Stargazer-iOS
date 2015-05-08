@@ -11,6 +11,7 @@ import UIKit
 class StarListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var starsLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
