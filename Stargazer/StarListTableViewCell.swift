@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TagListView
 
 class StarListTableViewCell: UITableViewCell {
 
@@ -14,6 +15,7 @@ class StarListTableViewCell: UITableViewCell {
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var starsLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var tagListView: TagListView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TagListView
 
 class StarListTableViewController: UITableViewController {
     var stars: [[String: AnyObject]] = [] {
@@ -56,6 +57,11 @@ class StarListTableViewController: UITableViewController {
         cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
         cell.starsLabel.text = toString(starItem["stargazers_count"] as? Int ?? 0)
         cell.descriptionLabel.text = starItem["description"] as? String
+        
+        cell.tagListView.removeAllTags()
+        for tag in ["test", "tag", "animation", "something"] {
+            cell.tagListView.addTag(tag)
+        }
 
         return cell
     }

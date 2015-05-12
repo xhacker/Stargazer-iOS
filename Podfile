@@ -5,3 +5,4 @@ use_frameworks!
 pod 'KeychainAccess', '~> 1.2.0'
 pod 'Alamofire', '~> 1.2'
 pod 'SwiftyJSON', '>= 2.2'
+pod 'TagListView'
