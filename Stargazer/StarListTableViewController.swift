@@ -62,6 +62,8 @@ class StarListTableViewController: UITableViewController {
         for tag in ["test", "tag", "animation", "something"] {
             cell.tagListView.addTag(tag)
         }
+        
+        cell.updateConstraintsIfNeeded()
 
         return cell
     }

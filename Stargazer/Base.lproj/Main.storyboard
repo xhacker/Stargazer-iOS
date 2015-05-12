@@ -58,7 +58,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="137" id="LdM-OR-Lvg" customClass="StarListTableViewCell" customModule="Stargazer" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="LdM-OR-Lvg" customClass="StarListTableViewCell" customModule="Stargazer" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LdM-OR-Lvg" id="kec-TT-VJf">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -119,7 +119,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gyh-mS-t5Y" customClass="TagListView" customModule="TagListView">
-                                            <rect key="frame" x="8" y="91" width="304" height="37"/>
+                                            <rect key="frame" x="8" y="94" width="304" height="34"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="tintColor" red="0.41960784313725491" green="0.66274509803921566" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -156,6 +156,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="wyM-sY-XDD" secondAttribute="trailing" constant="-3" id="Bjc-uG-sE5"/>
                                         <constraint firstItem="bQo-VE-bWE" firstAttribute="leading" secondItem="30v-14-sLp" secondAttribute="trailing" priority="200" constant="8" id="CTG-qq-g1q"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="j5n-PF-lGq" secondAttribute="trailing" id="CTb-Zx-j4V"/>
+                                        <constraint firstItem="wyM-sY-XDD" firstAttribute="top" secondItem="kec-TT-VJf" secondAttribute="topMargin" constant="24" id="Fx8-8r-fGd"/>
                                         <constraint firstItem="Gyh-mS-t5Y" firstAttribute="bottom" secondItem="kec-TT-VJf" secondAttribute="bottomMargin" id="GUv-Vl-4bJ"/>
                                         <constraint firstItem="30v-14-sLp" firstAttribute="leading" secondItem="kec-TT-VJf" secondAttribute="leadingMargin" id="Mvg-LR-8o2"/>
                                         <constraint firstItem="30v-14-sLp" firstAttribute="leading" secondItem="kec-TT-VJf" secondAttribute="leadingMargin" constant="4" id="OdN-Ya-A4t"/>
@@ -169,7 +170,7 @@
                                         <constraint firstItem="bQo-VE-bWE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="30v-14-sLp" secondAttribute="trailing" constant="2" id="jQ6-fg-XdN"/>
                                         <constraint firstItem="30v-14-sLp" firstAttribute="top" secondItem="kec-TT-VJf" secondAttribute="topMargin" id="lnX-NO-Q9G"/>
                                         <constraint firstItem="wyM-sY-XDD" firstAttribute="top" secondItem="j5n-PF-lGq" secondAttribute="bottom" constant="3" id="qVr-6w-L0y"/>
-                                        <constraint firstItem="Gyh-mS-t5Y" firstAttribute="top" secondItem="wyM-sY-XDD" secondAttribute="bottom" constant="5" id="rOD-s4-CMZ"/>
+                                        <constraint firstItem="Gyh-mS-t5Y" firstAttribute="top" secondItem="wyM-sY-XDD" secondAttribute="bottom" constant="8" symbolic="YES" id="rOD-s4-CMZ"/>
                                         <constraint firstItem="bQo-VE-bWE" firstAttribute="top" secondItem="kec-TT-VJf" secondAttribute="topMargin" constant="3" id="wxI-ZE-Vj3"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="j5n-PF-lGq" secondAttribute="trailing" id="xQ8-kF-iZG"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="dJH-Vq-wY7" secondAttribute="trailing" constant="18" id="yJ5-Yc-eTj"/>
@@ -181,6 +182,7 @@
                                             <exclude reference="BbA-gD-yNR"/>
                                             <exclude reference="ejk-lW-Yg5"/>
                                             <exclude reference="hms-Bs-qtj"/>
+                                            <exclude reference="qVr-6w-L0y"/>
                                             <exclude reference="11A-ta-HI8"/>
                                             <exclude reference="WPW-Gj-LcB"/>
                                             <exclude reference="xQ8-kF-iZG"/>
