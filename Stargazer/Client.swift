@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import SwiftyJSON
 import KeychainAccess
 
@@ -65,10 +66,23 @@ enum Router: URLRequestConvertible {
 class Client: NSObject {
     static let sharedInstance = Client()
     
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     func getStarred(success: (stars: [[String: AnyObject]]) -> Void) {
         Alamofire.request(Router.Starred()).responseJSON { (request, response, jsonObject, error) in
             self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
         }
+        
+        // FIXME: Just to test Core Data
+        let newRepo = NSEntityDescription.insertNewObjectForEntityForName("Repo", inManagedObjectContext: managedObjectContext!) as! Repo
+        newRepo.name = "Stargazer"
+        newRepo.desc = "All your star are belong to us"
+      
+//        let entityDescription =
+//        NSEntityDescription.entityForName("Repo",
+//            inManagedObjectContext: managedObjectContext!)
+//        let newRepo = Repo(entity: entityDescription!,
+//            insertIntoManagedObjectContext: managedObjectContext)
     }
     
     func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, success: (stars: [[String: AnyObject]]) -> Void) -> Void {
@@ -78,6 +92,7 @@ class Client: NSObject {
             
             for (index: String, starItem: JSON) in json {
                 stars.append([
+                    "id": starItem["id"].intValue,
                     "name": starItem["name"].stringValue,
                     "full_name": starItem["full_name"].stringValue,
                     "description": starItem["description"].stringValue,

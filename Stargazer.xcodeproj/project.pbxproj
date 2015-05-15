@@ -12,6 +12,9 @@
 		1A127FED1AF9E08F0057A317 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FEC1AF9E08F0057A317 /* Constants.swift */; };
 		1A127FEF1AF9E7060057A317 /* StarListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FEE1AF9E7060057A317 /* StarListTableViewController.swift */; };
 		1A127FF51AF9ED0B0057A317 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A127FF41AF9ED0B0057A317 /* Client.swift */; };
+		1A18DE101B05CD9000279ADA /* Stargazer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE0E1B05CD9000279ADA /* Stargazer.xcdatamodeld */; };
+		1A18DE131B05D4E200279ADA /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE111B05D4E200279ADA /* Tag.swift */; };
+		1A18DE141B05D4E200279ADA /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE121B05D4E200279ADA /* Repo.swift */; };
 		1A198AC81AF3563C009F9660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A198AC71AF3563C009F9660 /* AppDelegate.swift */; };
 		1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A198AC91AF3563C009F9660 /* DiscouverViewController.swift */; };
 		1A198ACF1AF3563C009F9660 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A198ACD1AF3563C009F9660 /* Main.storyboard */; };
@@ -46,6 +49,9 @@
 		1A127FEC1AF9E08F0057A317 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1A127FEE1AF9E7060057A317 /* StarListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarListTableViewController.swift; sourceTree = "<group>"; };
 		1A127FF41AF9ED0B0057A317 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		1A18DE0F1B05CD9000279ADA /* Stargazer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Stargazer.xcdatamodel; sourceTree = "<group>"; };
+		1A18DE111B05D4E200279ADA /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		1A18DE121B05D4E200279ADA /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		1A198AC21AF3563C009F9660 /* Stargazer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stargazer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A198AC61AF3563C009F9660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A198AC71AF3563C009F9660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +128,15 @@
 			name = Networking;
 			sourceTree = "<group>";
 		};
+		1A18DE151B05D4EB00279ADA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1A18DE111B05D4E200279ADA /* Tag.swift */,
+				1A18DE121B05D4E200279ADA /* Repo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		1A198AB91AF3563C009F9660 = {
 			isa = PBXGroup;
 			children = (
@@ -155,10 +170,12 @@
 				1A127FF11AF9E71D0057A317 /* Discouver */,
 				1A127FF01AF9E7100057A317 /* Stars */,
 				1A127FF21AF9E7280057A317 /* Settings */,
+				1A18DE151B05D4EB00279ADA /* Model */,
 				1A198ACD1AF3563C009F9660 /* Main.storyboard */,
 				1A2253891AFC984300BC1364 /* Misc.swift */,
 				1A198AD01AF3563C009F9660 /* Images.xcassets */,
 				1A198AD21AF3563C009F9660 /* LaunchScreen.xib */,
+				1A18DE0E1B05CD9000279ADA /* Stargazer.xcdatamodeld */,
 				1A198AC51AF3563C009F9660 /* Supporting Files */,
 			);
 			path = Stargazer;
@@ -358,12 +375,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A18DE131B05D4E200279ADA /* Tag.swift in Sources */,
 				1A198AC81AF3563C009F9660 /* AppDelegate.swift in Sources */,
+				1A18DE101B05CD9000279ADA /* Stargazer.xcdatamodeld in Sources */,
 				1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */,
 				1A127FE81AF9D5820057A317 /* SignInViewController.swift in Sources */,
 				1A127FEA1AF9D6A20057A317 /* Config.swift in Sources */,
 				1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */,
 				1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */,
+				1A18DE141B05D4E200279ADA /* Repo.swift in Sources */,
 				1A22538A1AFC984300BC1364 /* Misc.swift in Sources */,
 				1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */,
 				1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */,
@@ -589,6 +609,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1A18DE0E1B05CD9000279ADA /* Stargazer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1A18DE0F1B05CD9000279ADA /* Stargazer.xcdatamodel */,
+			);
+			currentVersion = 1A18DE0F1B05CD9000279ADA /* Stargazer.xcdatamodel */;
+			path = Stargazer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1A198ABA1AF3563C009F9660 /* Project object */;
 }

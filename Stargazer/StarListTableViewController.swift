@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import CoreData
 import TagListView
 
 class StarListTableViewController: UITableViewController {
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     var stars: [[String: AnyObject]] = [] {
         didSet {
             tableView.reloadData()
@@ -26,6 +29,18 @@ class StarListTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
         
         fetchStars()
+        
+        // FIXME: Just to test Core Data
+        let fetchRequest = NSFetchRequest(entityName: "Repo")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
+            let alert = UIAlertController(title: fetchResults[0].name,
+                message: fetchResults[0].desc,
+                preferredStyle: .Alert)
+            
+            self.presentViewController(alert,
+                animated: true,
+                completion: nil)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
