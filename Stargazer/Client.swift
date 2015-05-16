@@ -65,31 +65,26 @@ enum Router: URLRequestConvertible {
 
 class Client: NSObject {
     static let sharedInstance = Client()
+    var fetching = false
+    var stars: [[String: AnyObject]] = []
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    func getStarred(success: (stars: [[String: AnyObject]]) -> Void) {
+    func updateStarred(success: (stars: [[String: AnyObject]]) -> Void) {
+        if fetching {
+            return
+        }
+        fetching = true
+        stars = []
+        
         Alamofire.request(Router.Starred()).responseJSON { (request, response, jsonObject, error) in
             self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
         }
-        
-        // FIXME: Just to test Core Data
-        let newRepo = NSEntityDescription.insertNewObjectForEntityForName("Repo", inManagedObjectContext: managedObjectContext!) as! Repo
-        newRepo.name = "Stargazer"
-        newRepo.desc = "All your star are belong to us"
-        newRepo.language = "brainfuck"
-      
-//        let entityDescription =
-//        NSEntityDescription.entityForName("Repo",
-//            inManagedObjectContext: managedObjectContext!)
-//        let newRepo = Repo(entity: entityDescription!,
-//            insertIntoManagedObjectContext: managedObjectContext)
     }
     
     func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, success: (stars: [[String: AnyObject]]) -> Void) -> Void {
         if let jsonObject = jsonObject as? NSArray {
             let json = JSON(jsonObject)
-            var stars: [[String: AnyObject]] = []
             
             for (index: String, starItem: JSON) in json {
                 stars.append([
@@ -108,8 +103,18 @@ class Client: NSObject {
         }
         
         if let response = response, nextURLString = nextURLStringFromResponse(response) {
+            println("Requesting next page")
+            
             Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
                 self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
+            }
+        }
+        else {
+            // last page
+            println("Last page")
+            
+            for star in stars {
+                Repo.createFromDictionary(star, inContext: managedObjectContext!)
             }
         }
     }

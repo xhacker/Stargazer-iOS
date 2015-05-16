@@ -13,12 +13,6 @@ import TagListView
 class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    var stars: [[String: AnyObject]] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Repo")
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
@@ -44,8 +38,6 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         
-        fetchStars()
-        
         var error: NSError? = nil
         if fetchedResultsController.performFetch(&error) == false {
             print("An error occurred: \(error?.localizedDescription)")
@@ -54,12 +46,6 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    
-    func fetchStars() {
-        Client.sharedInstance.getStarred() { stars in
-            self.stars.extend(stars)
-        }
     }
 
     // MARK: - Table view data source
@@ -120,16 +106,47 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         }    
     }
     */
+    
+    // MARK: - Fetched results controller delegate
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController,
+        didChangeObject object: AnyObject,
+        atIndexPath indexPath: NSIndexPath?,
+        forChangeType type: NSFetchedResultsChangeType,
+        newIndexPath: NSIndexPath?) {
+            switch type {
+            case .Insert:
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Update:
+                let cell = tableView.cellForRowAtIndexPath(indexPath!)
+                tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .Move:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Delete:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            default:
+                return
+            }
+    }
+
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates()
+    }
 
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = tableView.indexPathForSelectedRow()!
-        let starItem = stars[indexPath.row]
+        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
         
         let webViewController = segue.destinationViewController as! StarWebViewController
-        webViewController.title = starItem["name"] as? String
-        webViewController.URLString = starItem["html_url"] as? String
+        webViewController.title = starItem.name
+        webViewController.URLString = starItem.html_url
     }
 
 }

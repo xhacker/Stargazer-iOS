@@ -27,6 +27,7 @@
 		1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */; };
 		1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */; };
 		1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */; };
+		1AC9D1121B07F5BA005BD335 /* RepoExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */; };
 		1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF3EF251AF89966008A47EC /* TabBarViewController.swift */; };
 		9E14F872CE87E3A0E24CF2A7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155B52EC41644E3FBE7AB2E8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -68,6 +69,7 @@
 		1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageLabel.swift; sourceTree = "<group>"; };
 		1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTableViewController.swift; sourceTree = "<group>"; };
+		1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoExtension.swift; sourceTree = "<group>"; };
 		1AF3EF251AF89966008A47EC /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		62D5A2C4E3E10528C53F6164 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		63F067DE0B10326ABFC46449 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			children = (
 				1A18DE111B05D4E200279ADA /* Tag.swift */,
 				1A18DE121B05D4E200279ADA /* Repo.swift */,
+				1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A18DE131B05D4E200279ADA /* Tag.swift in Sources */,
+				1AC9D1121B07F5BA005BD335 /* RepoExtension.swift in Sources */,
 				1A198AC81AF3563C009F9660 /* AppDelegate.swift in Sources */,
 				1A18DE101B05CD9000279ADA /* Stargazer.xcdatamodeld in Sources */,
 				1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */,
