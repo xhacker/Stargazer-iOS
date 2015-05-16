@@ -11,14 +11,14 @@ import CoreData
 
 class Repo: NSManagedObject {
 
-    @NSManaged var id: NSNumber
-    @NSManaged var name: String
-    @NSManaged var full_name: String
-    @NSManaged var desc: String
-    @NSManaged var html_url: String
-    @NSManaged var language: String
-    @NSManaged var forks_count: NSNumber
-    @NSManaged var stargazers_count: NSNumber
-    @NSManaged var tags: NSSet
+    @NSManaged var desc: String?
+    @NSManaged var forks_count: NSNumber?
+    @NSManaged var full_name: String?
+    @NSManaged var html_url: String?
+    @NSManaged var id: NSNumber?
+    @NSManaged var language: String?
+    @NSManaged var name: String?
+    @NSManaged var stargazers_count: NSNumber?
+    @NSManaged var tags: NSSet?
 
 }

@@ -77,6 +77,7 @@ class Client: NSObject {
         let newRepo = NSEntityDescription.insertNewObjectForEntityForName("Repo", inManagedObjectContext: managedObjectContext!) as! Repo
         newRepo.name = "Stargazer"
         newRepo.desc = "All your star are belong to us"
+        newRepo.language = "brainfuck"
       
 //        let entityDescription =
 //        NSEntityDescription.entityForName("Repo",

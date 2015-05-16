@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import TagListView
 
-class StarListTableViewController: UITableViewController {
+class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     var stars: [[String: AnyObject]] = [] {
@@ -18,6 +18,22 @@ class StarListTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        let fetchRequest = NSFetchRequest(entityName: "Repo")
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: self.managedObjectContext!,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        frc.delegate = self
+        
+        return frc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +46,9 @@ class StarListTableViewController: UITableViewController {
         
         fetchStars()
         
-        // FIXME: Just to test Core Data
-        let fetchRequest = NSFetchRequest(entityName: "Repo")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
-            let alert = UIAlertController(title: fetchResults[0].name,
-                message: fetchResults[0].desc,
-                preferredStyle: .Alert)
-            
-            self.presentViewController(alert,
-                animated: true,
-                completion: nil)
+        var error: NSError? = nil
+        if fetchedResultsController.performFetch(&error) == false {
+            print("An error occurred: \(error?.localizedDescription)")
         }
     }
     
@@ -56,22 +65,31 @@ class StarListTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if let sections = fetchedResultsController.sections {
+            return sections.count
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stars.count
+        if let sections = fetchedResultsController.sections {
+            let currentSection = sections[section] as! NSFetchedResultsSectionInfo
+            return currentSection.numberOfObjects
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! StarListTableViewCell
         
-        let starItem = stars[indexPath.row]
-        cell.nameLabel.text = starItem["name"] as? String
-        cell.languageLabel.text = starItem["language"] as? String
+        let repo = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+        cell.nameLabel.text = repo.name
+        cell.languageLabel.text = repo.language
         cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
-        cell.starsLabel.text = toString(starItem["stargazers_count"] as? Int ?? 0)
-        cell.descriptionLabel.text = starItem["description"] as? String
+        cell.starsLabel.text = toString(repo.stargazers_count as? Int ?? 0)
+        cell.descriptionLabel.text = repo.desc
         
         cell.tagListView.removeAllTags()
         for tag in ["test", "tag", "animation", "something"] {

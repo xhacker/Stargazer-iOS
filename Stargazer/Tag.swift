@@ -11,7 +11,7 @@ import CoreData
 
 class Tag: NSManagedObject {
 
-    @NSManaged var name: String
-    @NSManaged var repos: NSSet
+    @NSManaged var name: String?
+    @NSManaged var repos: NSSet?
 
 }

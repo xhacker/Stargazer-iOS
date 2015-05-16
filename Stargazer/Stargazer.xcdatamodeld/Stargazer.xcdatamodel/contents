@@ -16,7 +16,7 @@
         <relationship name="repos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Repo" inverseName="tags" inverseEntity="Repo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Repo" positionX="-1449" positionY="-828" width="128" height="178"/>
+        <element name="Repo" positionX="-1449" positionY="-828" width="128" height="180"/>
         <element name="Tag" positionX="-1440" positionY="-756" width="128" height="75"/>
     </elements>
 </model>
