@@ -134,6 +134,7 @@ class Client: NSObject {
                 Repo.createFromDictionary(star, inContext: managedObjectContext!)
             }
             
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: kUserDefaultsFetchedKey)
             progressCallback(progress: 1.0)
             fetching = false
         }

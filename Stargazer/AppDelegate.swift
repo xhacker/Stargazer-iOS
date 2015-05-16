@@ -20,16 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Client.sharedInstance.updateStarred { (progress) -> Void in
-            if let progress = progress {
-                if progress == 1.0 {
-                    SVProgressHUD.dismiss()
+            // if this is the first time, show a HUD
+            if NSUserDefaults.standardUserDefaults().objectForKey(kUserDefaultsFetchedKey) == nil {
+                if let progress = progress {
+                    if progress == 1.0 {
+                        SVProgressHUD.dismiss()
+                    }
+                    else {
+                        SVProgressHUD.showProgress(progress, status: "Fetching stars...", maskType: .Gradient)
+                    }
                 }
                 else {
-                    SVProgressHUD.showProgress(progress, status: "Fetching stars...", maskType: .Gradient)
+                    SVProgressHUD.showWithStatus("Fetching stars...", maskType: .Gradient)
                 }
-            }
-            else {
-                SVProgressHUD.showWithStatus("Fetching stars...", maskType: .Gradient)
             }
         }
         

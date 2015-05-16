@@ -8,3 +8,4 @@
 
 let kKeychainServiceName = "build.ela.Stargazer"
 let kKeychainGitHubTokenKey = "github-token"
+let kUserDefaultsFetchedKey = "fetched"
