@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Alamofire
 import KeychainAccess
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Client.sharedInstance.updateStarred { (stars) -> Void in
+        Client.sharedInstance.updateStarred { (progress) -> Void in
+            if let progress = progress {
+                if progress == 1.0 {
+                    SVProgressHUD.dismiss()
+                }
+                else {
+                    SVProgressHUD.showProgress(progress, status: "Fetching stars...", maskType: .Gradient)
+                }
+            }
+            else {
+                SVProgressHUD.showWithStatus("Fetching stars...", maskType: .Gradient)
+            }
         }
         
         return true

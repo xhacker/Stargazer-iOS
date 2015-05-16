@@ -67,22 +67,33 @@ class Client: NSObject {
     static let sharedInstance = Client()
     var fetching = false
     var stars: [[String: AnyObject]] = []
+    var currentPage = 0
+    var numPages: Int?
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    func updateStarred(success: (stars: [[String: AnyObject]]) -> Void) {
+    func updateStarred(progressCallback: (progress: Float?) -> Void) {
         if fetching {
             return
         }
         fetching = true
         stars = []
+        currentPage = 0
         
         Alamofire.request(Router.Starred()).responseJSON { (request, response, jsonObject, error) in
-            self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
+            if let response = response,
+                lastURLString = linkURLStringFromResponse(response, rel: "last"),
+                urlComponents = NSURLComponents(URL: NSURL(string: lastURLString)!, resolvingAgainstBaseURL: false),
+                queryItem = urlComponents.queryItems?.first as? NSURLQueryItem,
+                lastPage = queryItem.value {
+                self.numPages = lastPage.toInt()
+            }
+            
+            self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
         }
     }
     
-    func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, success: (stars: [[String: AnyObject]]) -> Void) -> Void {
+    func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, progressCallback: (progress: Float?) -> Void) -> Void {
         if let jsonObject = jsonObject as? NSArray {
             let json = JSON(jsonObject)
             
@@ -99,14 +110,20 @@ class Client: NSObject {
                 ])
             }
             
-            success(stars: stars)
+            currentPage += 1
+            if let numPages = numPages {
+                progressCallback(progress: Float(currentPage) / Float(numPages))
+            }
+            else {
+                progressCallback(progress: nil)
+            }
         }
         
-        if let response = response, nextURLString = nextURLStringFromResponse(response) {
+        if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
             println("Requesting next page")
             
             Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
-                self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, success: success)
+                self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
             }
         }
         else {
@@ -116,13 +133,16 @@ class Client: NSObject {
             for star in stars {
                 Repo.createFromDictionary(star, inContext: managedObjectContext!)
             }
+            
+            progressCallback(progress: 1.0)
+            fetching = false
         }
     }
 }
 
 
 // Courtesy of OctoKit, translated to Swift
-func nextURLStringFromResponse(response: NSHTTPURLResponse) -> String? {
+func linkURLStringFromResponse(response: NSHTTPURLResponse, #rel: String) -> String? {
     let header = response.allHeaderFields
     let linksString = header["Link"] as? String
     if let linksString = header["Link"] as? String {
@@ -153,7 +173,7 @@ func nextURLStringFromResponse(response: NSHTTPURLResponse) -> String? {
             }
 
             let type = (link as NSString).substringWithRange(result!.rangeAtIndex(1))
-            if type != "next" {
+            if type != rel {
                 continue
             }
             
