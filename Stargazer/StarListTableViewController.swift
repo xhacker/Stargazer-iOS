@@ -142,11 +142,10 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = tableView.indexPathForSelectedRow()!
-        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
         
         let webViewController = segue.destinationViewController as! StarWebViewController
-        webViewController.title = starItem.name
-        webViewController.URLString = starItem.html_url
+        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+        webViewController.repo = starItem
     }
 
 }

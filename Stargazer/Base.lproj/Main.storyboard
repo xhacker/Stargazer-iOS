@@ -220,8 +220,42 @@
                     <view key="view" contentMode="scaleToFill" id="kD5-Ya-z8y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Blu-e3-kEO" customClass="CLTokenInputView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="44" id="IMO-aX-ldK"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderText" value="Tap to add tags..."/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="drawBottomBorder" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fieldName" value="Tags:"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="QeU-hl-u9G" id="251-ss-uit"/>
+                                </connections>
+                            </view>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75r-st-wPG">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="75r-st-wPG" secondAttribute="trailing" id="NLR-rR-xHg"/>
+                            <constraint firstItem="Blu-e3-kEO" firstAttribute="top" secondItem="XVe-pk-mu0" secondAttribute="bottom" id="Oyu-0l-iAk"/>
+                            <constraint firstItem="Blu-e3-kEO" firstAttribute="leading" secondItem="kD5-Ya-z8y" secondAttribute="leading" id="dSq-zJ-klH"/>
+                            <constraint firstItem="75r-st-wPG" firstAttribute="top" secondItem="Blu-e3-kEO" secondAttribute="bottom" id="kgs-T4-pqn"/>
+                            <constraint firstAttribute="trailing" secondItem="Blu-e3-kEO" secondAttribute="trailing" id="nvd-KB-KwJ"/>
+                            <constraint firstItem="75r-st-wPG" firstAttribute="leading" secondItem="kD5-Ya-z8y" secondAttribute="leading" id="uPx-Bv-LKE"/>
+                            <constraint firstAttribute="bottom" secondItem="75r-st-wPG" secondAttribute="bottom" id="z8z-qT-4FX"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tokenInputView" destination="Blu-e3-kEO" id="lhe-86-dB1"/>
+                        <outlet property="webView" destination="75r-st-wPG" id="WkG-I8-Fkm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJ0-KC-WDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -440,5 +474,5 @@
         <image name="stars" width="30" height="30"/>
         <image name="stars-active" width="30" height="30"/>
     </resources>
-    <color key="tintColor" red="0.41999999999999998" green="0.66000000000000003" blue="0.91000000000000003" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.31" green="0.56999999999999995" blue="0.87" alpha="1" colorSpace="calibratedRGB"/>
 </document>

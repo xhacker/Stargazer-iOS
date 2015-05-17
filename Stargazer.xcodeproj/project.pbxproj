@@ -27,6 +27,7 @@
 		1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */; };
 		1A5855A21AF3592F0098D25A /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */; };
 		1A5855A41AF35A1F0098D25A /* StarsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */; };
+		1A5CF7B41B0856970081E528 /* TagExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5CF7B31B0856970081E528 /* TagExtension.swift */; };
 		1AC9D1121B07F5BA005BD335 /* RepoExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */; };
 		1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF3EF251AF89966008A47EC /* TabBarViewController.swift */; };
 		9E14F872CE87E3A0E24CF2A7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155B52EC41644E3FBE7AB2E8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -69,6 +70,7 @@
 		1A22538B1AFC9BBA00BC1364 /* LanguageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageLabel.swift; sourceTree = "<group>"; };
 		1A5855A11AF3592F0098D25A /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1A5855A31AF35A1F0098D25A /* StarsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTableViewController.swift; sourceTree = "<group>"; };
+		1A5CF7B31B0856970081E528 /* TagExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagExtension.swift; sourceTree = "<group>"; };
 		1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoExtension.swift; sourceTree = "<group>"; };
 		1AF3EF251AF89966008A47EC /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		62D5A2C4E3E10528C53F6164 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				1A18DE111B05D4E200279ADA /* Tag.swift */,
+				1A5CF7B31B0856970081E528 /* TagExtension.swift */,
 				1A18DE121B05D4E200279ADA /* Repo.swift */,
 				1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */,
 			);
@@ -386,6 +389,7 @@
 				1A127FE81AF9D5820057A317 /* SignInViewController.swift in Sources */,
 				1A127FEA1AF9D6A20057A317 /* Config.swift in Sources */,
 				1A22538C1AFC9BBA00BC1364 /* LanguageLabel.swift in Sources */,
+				1A5CF7B41B0856970081E528 /* TagExtension.swift in Sources */,
 				1A198ACA1AF3563C009F9660 /* DiscouverViewController.swift in Sources */,
 				1A18DE141B05D4E200279ADA /* Repo.swift in Sources */,
 				1A22538A1AFC984300BC1364 /* Misc.swift in Sources */,
