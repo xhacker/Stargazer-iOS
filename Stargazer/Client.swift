@@ -147,9 +147,7 @@ class Client: NSObject {
         let fetchRequest = NSFetchRequest(entityName: "Repo")
         if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
             for repo in fetchResults {
-                if let id = repo.id?.integerValue {
-                    currentSet.insert(id)
-                }
+                currentSet.insert(repo.id.integerValue)
             }
         }
         
