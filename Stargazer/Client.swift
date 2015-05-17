@@ -94,46 +94,49 @@ class Client: NSObject {
     }
     
     func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, progressCallback: (progress: Float?) -> Void) -> Void {
-        if let jsonObject = jsonObject as? NSArray {
-            let json = JSON(jsonObject)
-            
-            for (index: String, starItem: JSON) in json {
-                stars.append([
-                    "id": starItem["id"].intValue,
-                    "name": starItem["name"].stringValue,
-                    "full_name": starItem["full_name"].stringValue,
-                    "description": starItem["description"].stringValue,
-                    "html_url": starItem["html_url"].stringValue,
-                    "language": starItem["language"].stringValue,
-                    "forks_count": starItem["forks_count"].intValue,
-                    "stargazers_count": starItem["stargazers_count"].intValue,
-                ])
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            if let jsonObject = jsonObject as? NSArray {
+                let json = JSON(jsonObject)
+                
+                for (index: String, starItem: JSON) in json {
+                    self.stars.append([
+                        "id": starItem["id"].intValue,
+                        "name": starItem["name"].stringValue,
+                        "full_name": starItem["full_name"].stringValue,
+                        "description": starItem["description"].stringValue,
+                        "html_url": starItem["html_url"].stringValue,
+                        "language": starItem["language"].stringValue,
+                        "forks_count": starItem["forks_count"].intValue,
+                        "stargazers_count": starItem["stargazers_count"].intValue,
+                    ])
+                }
+                
+                self.currentPage += 1
+                if let numPages = self.numPages {
+                    progressCallback(progress: Float(self.currentPage) / Float(numPages))
+                }
+                else {
+                    progressCallback(progress: nil)
+                }
             }
             
-            currentPage += 1
-            if let numPages = numPages {
-                progressCallback(progress: Float(currentPage) / Float(numPages))
+            if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
+                println("Requesting next page (\(self.currentPage + 1))")
+                Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
+                    self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
+                }
             }
             else {
-                progressCallback(progress: nil)
+                // last page
+                println("Last page")
+                
+                self.saveStars()
+                
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: kUserDefaultsFetchedKey)
+                progressCallback(progress: 1.0)
+                self.fetching = false
             }
-        }
-        
-        if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
-            println("Requesting next page (\(currentPage + 1))")
-            Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
-                self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
-            }
-        }
-        else {
-            // last page
-            println("Last page")
-            
-            saveStars()
-            
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: kUserDefaultsFetchedKey)
-            progressCallback(progress: 1.0)
-            fetching = false
         }
     }
     
@@ -151,23 +154,25 @@ class Client: NSObject {
             }
         }
         
-        // delete removed stars
-        let removedSet = currentSet.subtract(downloadedSet)
-        println("Deleting removed stars: \(removedSet)")
-        for id in removedSet {
-            let request = NSFetchRequest(entityName: "Repo")
-            request.predicate = NSPredicate(format: "id == %i", id)
-            if let results = managedObjectContext!.executeFetchRequest(request, error: nil) as? [Repo] {
-                managedObjectContext!.deleteObject(results[0])
+        dispatch_async(dispatch_get_main_queue()) {
+            // delete removed stars
+            let removedSet = currentSet.subtract(downloadedSet)
+            println("Deleting removed stars: \(removedSet)")
+            for id in removedSet {
+                let request = NSFetchRequest(entityName: "Repo")
+                request.predicate = NSPredicate(format: "id == %i", id)
+                if let results = self.managedObjectContext!.executeFetchRequest(request, error: nil) as? [Repo] {
+                    self.managedObjectContext!.deleteObject(results[0])
+                }
             }
-        }
-        
-        // save new stars
-        for star in stars {
-            if !currentSet.contains(star["id"] as! Int) {
-                let name = star["name"] as! String
-                println("Saving new star: \(name)")
-                Repo.createFromDictionary(star, inContext: managedObjectContext!)
+            
+            // save new stars
+            for star in self.stars {
+                if !currentSet.contains(star["id"] as! Int) {
+                    let name = star["name"] as! String
+                    println("Saving new star: \(name)")
+                    Repo.createFromDictionary(star, inContext: self.managedObjectContext!)
+                }
             }
         }
     }

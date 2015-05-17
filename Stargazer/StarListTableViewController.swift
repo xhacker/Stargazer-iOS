@@ -110,7 +110,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Fetched results controller delegate
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.beginUpdates()
+        tableView.beginUpdates()
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -135,7 +135,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates()
+        tableView.endUpdates()
     }
 
     // MARK: - Navigation
