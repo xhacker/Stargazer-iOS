@@ -78,8 +78,8 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         cell.descriptionLabel.text = repo.desc
         
         cell.tagListView.removeAllTags()
-        for tag in ["test", "tag", "animation", "something"] {
-            cell.tagListView.addTag(tag)
+        for tag in repo.tags {
+            cell.tagListView.addTag(tag.name)
         }
         
         cell.updateConstraintsIfNeeded()
