@@ -72,7 +72,7 @@ class Client: NSObject {
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    func updateStarred(progressCallback: (progress: Float?) -> Void) {
+    func fetchStars(progressCallback: (progress: Float?) -> Void) {
         if fetching {
             return
         }
@@ -120,8 +120,7 @@ class Client: NSObject {
         }
         
         if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
-            println("Requesting next page")
-            
+            println("Requesting next page (\(currentPage + 1))")
             Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
                 self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
             }
@@ -130,13 +129,48 @@ class Client: NSObject {
             // last page
             println("Last page")
             
-            for star in stars {
-                Repo.createFromDictionary(star, inContext: managedObjectContext!)
-            }
+            saveStars()
             
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: kUserDefaultsFetchedKey)
             progressCallback(progress: 1.0)
             fetching = false
+        }
+    }
+    
+    private func saveStars() {
+        var downloadedSet = Set<Int>()
+        for star in stars {
+            downloadedSet.insert(star["id"] as! Int)
+        }
+        
+        var currentSet = Set<Int>()
+        let fetchRequest = NSFetchRequest(entityName: "Repo")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
+            for repo in fetchResults {
+                if let id = repo.id?.integerValue {
+                    currentSet.insert(id)
+                }
+            }
+        }
+        
+        // delete removed stars
+        let removedSet = currentSet.subtract(downloadedSet)
+        println("Deleting removed stars: \(removedSet)")
+        for id in removedSet {
+            let request = NSFetchRequest(entityName: "Repo")
+            request.predicate = NSPredicate(format: "id == %i", id)
+            if let results = managedObjectContext!.executeFetchRequest(request, error: nil) as? [Repo] {
+                managedObjectContext!.deleteObject(results[0])
+            }
+        }
+        
+        // save new stars
+        for star in stars {
+            if !currentSet.contains(star["id"] as! Int) {
+                let name = star["name"] as! String
+                println("Saving new star: \(name)")
+                Repo.createFromDictionary(star, inContext: managedObjectContext!)
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Client.sharedInstance.updateStarred { (progress) -> Void in
+        Client.sharedInstance.fetchStars { (progress) -> Void in
             // if this is the first time, show a HUD
             if NSUserDefaults.standardUserDefaults().objectForKey(kUserDefaultsFetchedKey) == nil {
                 if let progress = progress {
