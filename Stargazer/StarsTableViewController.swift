@@ -26,7 +26,25 @@ class StarsTableViewController: UITableViewController {
         }
     }
     
+    // cells in Stars section
+    enum StarsCell: Int {
+        case All = 0
+        case Untagged
+        static let count = 2
+        
+        var title: String? {
+            switch self {
+            case .All:
+                return "All"
+            case .Untagged:
+                return "Untagged"
+            }
+        }
+    }
+    
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    var allRepos: [Repo] = []
+    var untaggedRepos: [Repo] = []
     var tags: [Tag] = []
 
     override func viewDidLoad() {
@@ -35,9 +53,20 @@ class StarsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        let fetchRequest = NSFetchRequest(entityName: "Tag")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Tag] {
+        let tagFetchRequest = NSFetchRequest(entityName: "Tag")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(tagFetchRequest, error: nil) as? [Tag] {
             tags = fetchResults
+        }
+        
+        let allReposFetchRequest = NSFetchRequest(entityName: "Repo")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(allReposFetchRequest, error: nil) as? [Repo] {
+            allRepos = fetchResults
+        }
+        
+        let untaggedReposFetchRequest = NSFetchRequest(entityName: "Repo")
+        untaggedReposFetchRequest.predicate = NSPredicate(format: "tags.@count == 0")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(untaggedReposFetchRequest, error: nil) as? [Repo] {
+            untaggedRepos = fetchResults
         }
     }
 
@@ -59,7 +88,7 @@ class StarsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section)! {
         case .Stars:
-            return 2
+            return StarsCell.count
         case .Tags:
             return tags.count
         }
@@ -70,7 +99,13 @@ class StarsTableViewController: UITableViewController {
 
         switch Section(rawValue: indexPath.section)! {
         case .Stars:
-            cell.textLabel?.text = "All"
+            cell.textLabel?.text = StarsCell(rawValue: indexPath.row)!.title
+            switch StarsCell(rawValue: indexPath.row)! {
+            case .All:
+                cell.detailTextLabel?.text = String(allRepos.count)
+            case .Untagged:
+                cell.detailTextLabel?.text = String(untaggedRepos.count)
+            }
         case .Tags:
             cell.textLabel?.text = tags[indexPath.row].name
             cell.detailTextLabel?.text = String(tags[indexPath.row].repos.count)
@@ -99,14 +134,23 @@ class StarsTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        let indexPath = tableView.indexPathForSelectedRow()!
+        let viewController = segue.destinationViewController as! StarListTableViewController
+
+        switch Section(rawValue: indexPath.section)! {
+        case .Stars:
+            switch StarsCell(rawValue: indexPath.row)! {
+            case .All:
+                break
+            case .Untagged:
+                viewController.predicate = NSPredicate(format: "tags.@count == 0")
+            }
+        case .Tags:
+            viewController.predicate = NSPredicate(format: "ANY tags.name == %@", tags[indexPath.row].name)
+        }
     }
-    */
 
 }
