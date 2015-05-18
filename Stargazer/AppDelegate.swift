@@ -19,9 +19,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let keychain = Keychain(service: kKeychainServiceName)
+        if keychain[kKeychainGitHubTokenKey] != nil {
+            fetchStars()
+        }
+        
+        return true
+    }
+    
+    func fetchStars() {
+        let isFirstFetch = NSUserDefaults.standardUserDefaults().objectForKey(kUserDefaultsFetchedKey) == nil
+        if isFirstFetch {
+            SVProgressHUD.showWithStatus("Fetching stars...", maskType: .Gradient)
+        }
+        
         Client.sharedInstance.fetchStars { (progress) -> Void in
-            // if this is the first time, show a HUD
-            if NSUserDefaults.standardUserDefaults().objectForKey(kUserDefaultsFetchedKey) == nil {
+            if isFirstFetch {
                 if let progress = progress {
                     if progress == 1.0 {
                         SVProgressHUD.dismiss()
@@ -35,8 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
-        return true
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
@@ -53,12 +64,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             URLRequest.setValue("application/json", forHTTPHeaderField: "Accept")
             
             Alamofire.request(URLRequest).responseJSON { (_, _, JSON, error) in
-                if let JSON = JSON as? [String: String] {
-                    println(JSON["access_token"])
-                    
+                if let JSON = JSON as? [String: String] {                    
                     let keychain = Keychain(service: kKeychainServiceName)
                     keychain[kKeychainGitHubTokenKey] = JSON["access_token"]
                     Router.OAuthToken = JSON["access_token"]
+                    
+                    println("access_token saved")
+                    
+                    self.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    self.fetchStars()
                 }
             }
         }
