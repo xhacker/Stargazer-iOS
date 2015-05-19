@@ -144,11 +144,13 @@ class StarsTableViewController: UITableViewController {
         case .Stars:
             switch StarsCell(rawValue: indexPath.row)! {
             case .All:
-                break
+                viewController.title = "All"
             case .Untagged:
+                viewController.title = "Untagged"
                 viewController.predicate = NSPredicate(format: "tags.@count == 0")
             }
         case .Tags:
+            viewController.title = tags[indexPath.row].name
             viewController.predicate = NSPredicate(format: "ANY tags.name == %@", tags[indexPath.row].name)
         }
     }
