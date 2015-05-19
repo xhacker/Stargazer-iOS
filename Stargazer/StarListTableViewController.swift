@@ -10,9 +10,10 @@ import UIKit
 import CoreData
 import TagListView
 
-class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
+class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var predicate: NSPredicate?
+    var searchResults: [Repo] = []
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Repo")
@@ -39,6 +40,8 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
+        searchDisplayController?.searchResultsTableView.rowHeight = UITableViewAutomaticDimension
+        searchDisplayController?.searchResultsTableView.estimatedRowHeight = 100
         
         var error: NSError? = nil
         if fetchedResultsController.performFetch(&error) == false {
@@ -53,26 +56,34 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if let sections = fetchedResultsController.sections {
-            return sections.count
-        }
-        
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sections = fetchedResultsController.sections {
-            let currentSection = sections[section] as! NSFetchedResultsSectionInfo
-            return currentSection.numberOfObjects
+        if tableView == searchDisplayController?.searchResultsTableView {
+            return searchResults.count
         }
-        
-        return 0
+        else {
+            if let sections = fetchedResultsController.sections {
+                let currentSection = sections[section] as! NSFetchedResultsSectionInfo
+                return currentSection.numberOfObjects
+            }
+            
+            return 0
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! StarListTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! StarListTableViewCell
         
-        let repo = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+        let repo: Repo = {
+            if tableView == self.searchDisplayController?.searchResultsTableView {
+                return self.searchResults[indexPath.row]
+            }
+            else {
+                return self.fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+            }
+        }()
         cell.nameLabel.text = repo.name
         cell.languageLabel.text = repo.language
         cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
@@ -142,21 +153,18 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     
     // MARK: - Search bar delegate
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) == 0 {
-            fetchedResultsController.fetchRequest.predicate = nil
-        }
-        else {
-            let predicate = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchText, searchText)
-            fetchedResultsController.fetchRequest.predicate = predicate
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String!) -> Bool {
+        let filter = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchString, searchString)
+        let globalPredicate = self.predicate ?? NSPredicate(value: true)
+        let compoundPredicate = NSCompoundPredicate.andPredicateWithSubpredicates([globalPredicate, filter])
+        let fetchRequest = NSFetchRequest(entityName: "Repo")
+        fetchRequest.predicate = compoundPredicate
+        
+        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
+            searchResults = fetchResults
         }
         
-        var error: NSError? = nil
-        if fetchedResultsController.performFetch(&error) == false {
-            print("An error occurred: \(error?.localizedDescription)")
-        }
-        
-        tableView.reloadData()
+        return true
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -166,11 +174,18 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = tableView.indexPathForSelectedRow()!
-        
         let webViewController = segue.destinationViewController as! StarWebViewController
-        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
-        webViewController.repo = starItem
+        
+        if searchDisplayController!.active {
+            let indexPath = searchDisplayController!.searchResultsTableView.indexPathForSelectedRow()!
+            let starItem = searchResults[indexPath.row]
+            webViewController.repo = starItem
+        }
+        else {
+            let indexPath = tableView.indexPathForSelectedRow()!
+            let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+            webViewController.repo = starItem
+        }
     }
 
 }
