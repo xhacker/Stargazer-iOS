@@ -52,7 +52,7 @@
         <!--Star List-->
         <scene sceneID="oS1-pk-Xtq">
             <objects>
-                <tableViewController title="All" id="xX1-HH-qzS" userLabel="Star List" customClass="StarListTableViewController" customModule="Stargazer" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="StarList" title="Star List" id="xX1-HH-qzS" userLabel="Star List" customClass="StarListTableViewController" customModule="Stargazer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="137" sectionHeaderHeight="22" sectionFooterHeight="22" id="Mgf-Eq-AJA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

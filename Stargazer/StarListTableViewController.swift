@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import TagListView
 
-class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
+class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, TagListViewDelegate {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var predicate: NSPredicate?
     var searchController: UISearchController!
@@ -88,9 +88,15 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         cell.starsLabel.text = toString(repo.stargazers_count as? Int ?? 0)
         cell.descriptionLabel.text = repo.desc
         
+        cell.tagListView.delegate = self
         cell.tagListView.removeAllTags()
-        for tag in repo.tags {
-            cell.tagListView.addTag(tag.name)
+        if repo.tags.count > 0 {
+            for tag in repo.tags {
+                cell.tagListView.addTag(tag.name)
+            }
+        }
+        else {
+            cell.tagListView.addTag("add tag...")
         }
         
         cell.updateConstraintsIfNeeded()
@@ -170,6 +176,15 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         }
         
         tableView.reloadData()
+    }
+    
+    // MARK: - Tag list view delegate
+    
+    func tagPressed(title: String) {
+        let viewController = storyboard?.instantiateViewControllerWithIdentifier("StarList") as! StarListTableViewController
+        viewController.title = title
+        viewController.predicate = NSPredicate(format: "ANY tags.name == %@", title)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     // MARK: - Navigation
