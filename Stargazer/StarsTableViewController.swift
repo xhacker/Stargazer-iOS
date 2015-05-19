@@ -53,26 +53,18 @@ class StarsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        let tagFetchRequest = NSFetchRequest(entityName: "Tag")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(tagFetchRequest, error: nil) as? [Tag] {
-            tags = fetchResults
-        }
+        reloadData()
         
-        let allReposFetchRequest = NSFetchRequest(entityName: "Repo")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(allReposFetchRequest, error: nil) as? [Repo] {
-            allRepos = fetchResults
-        }
-        
-        let untaggedReposFetchRequest = NSFetchRequest(entityName: "Repo")
-        untaggedReposFetchRequest.predicate = NSPredicate(format: "tags.@count == 0")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(untaggedReposFetchRequest, error: nil) as? [Repo] {
-            untaggedRepos = fetchResults
-        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "coreDataObjectsDidChange", name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
     }
 
     // MARK: - Table view data source
@@ -133,6 +125,31 @@ class StarsTableViewController: UITableViewController {
         }    
     }
     */
+    
+    // MARK: - Notification
+    
+    func coreDataObjectsDidChange() {
+        reloadData()
+        tableView.reloadData()
+    }
+    
+    func reloadData() {
+        let tagFetchRequest = NSFetchRequest(entityName: "Tag")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(tagFetchRequest, error: nil) as? [Tag] {
+            tags = fetchResults
+        }
+        
+        let allReposFetchRequest = NSFetchRequest(entityName: "Repo")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(allReposFetchRequest, error: nil) as? [Repo] {
+            allRepos = fetchResults
+        }
+        
+        let untaggedReposFetchRequest = NSFetchRequest(entityName: "Repo")
+        untaggedReposFetchRequest.predicate = NSPredicate(format: "tags.@count == 0")
+        if let fetchResults = managedObjectContext!.executeFetchRequest(untaggedReposFetchRequest, error: nil) as? [Repo] {
+            untaggedRepos = fetchResults
+        }
+    }
 
     // MARK: - Navigation
 
