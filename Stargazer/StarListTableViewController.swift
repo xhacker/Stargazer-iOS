@@ -10,10 +10,10 @@ import UIKit
 import CoreData
 import TagListView
 
-class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
+class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var predicate: NSPredicate?
-    var searchResults: [Repo] = []
+    var searchController: UISearchController!
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Repo")
@@ -40,8 +40,14 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        searchDisplayController?.searchResultsTableView.rowHeight = UITableViewAutomaticDimension
-        searchDisplayController?.searchResultsTableView.estimatedRowHeight = 100
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.sizeToFit()
+        tableView.tableHeaderView = searchController.searchBar
+        definesPresentationContext = true
         
         var error: NSError? = nil
         if fetchedResultsController.performFetch(&error) == false {
@@ -56,34 +62,26 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if let sections = fetchedResultsController.sections {
+            return sections.count
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == searchDisplayController?.searchResultsTableView {
-            return searchResults.count
+        if let sections = fetchedResultsController.sections {
+            let currentSection = sections[section] as! NSFetchedResultsSectionInfo
+            return currentSection.numberOfObjects
         }
-        else {
-            if let sections = fetchedResultsController.sections {
-                let currentSection = sections[section] as! NSFetchedResultsSectionInfo
-                return currentSection.numberOfObjects
-            }
-            
-            return 0
-        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! StarListTableViewCell
         
-        let repo: Repo = {
-            if tableView == self.searchDisplayController?.searchResultsTableView {
-                return self.searchResults[indexPath.row]
-            }
-            else {
-                return self.fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
-            }
-        }()
+        let repo = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
         cell.nameLabel.text = repo.name
         cell.languageLabel.text = repo.language
         cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
@@ -151,41 +149,36 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         tableView.endUpdates()
     }
     
-    // MARK: - Search bar delegate
+    // MARK: - Search controller delegate
     
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String!) -> Bool {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchString = searchController.searchBar.text
         let filter = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchString, searchString)
         let globalPredicate = self.predicate ?? NSPredicate(value: true)
         let compoundPredicate = NSCompoundPredicate.andPredicateWithSubpredicates([globalPredicate, filter])
-        let fetchRequest = NSFetchRequest(entityName: "Repo")
-        fetchRequest.predicate = compoundPredicate
         
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
-            searchResults = fetchResults
+        if count(searchString) > 0 {
+            fetchedResultsController.fetchRequest.predicate = compoundPredicate
+        }
+        else {
+            fetchedResultsController.fetchRequest.predicate = self.predicate
         }
         
-        return true
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        var error: NSError? = nil
+        if fetchedResultsController.performFetch(&error) == false {
+            print("An error occurred: \(error?.localizedDescription)")
+        }
+        
+        tableView.reloadData()
     }
 
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let indexPath = tableView.indexPathForSelectedRow()!
+        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
         let webViewController = segue.destinationViewController as! StarWebViewController
-        
-        if searchDisplayController!.active {
-            let indexPath = searchDisplayController!.searchResultsTableView.indexPathForSelectedRow()!
-            let starItem = searchResults[indexPath.row]
-            webViewController.repo = starItem
-        }
-        else {
-            let indexPath = tableView.indexPathForSelectedRow()!
-            let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
-            webViewController.repo = starItem
-        }
+        webViewController.repo = starItem
     }
 
 }
