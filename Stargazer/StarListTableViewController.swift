@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import TagListView
 
-class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class StarListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var predicate: NSPredicate?
     
@@ -138,6 +138,29 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+    }
+    
+    // MARK: - Search bar delegate
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if count(searchText) == 0 {
+            fetchedResultsController.fetchRequest.predicate = nil
+        }
+        else {
+            let predicate = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchText, searchText)
+            fetchedResultsController.fetchRequest.predicate = predicate
+        }
+        
+        var error: NSError? = nil
+        if fetchedResultsController.performFetch(&error) == false {
+            print("An error occurred: \(error?.localizedDescription)")
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 
     // MARK: - Navigation
