@@ -16,6 +16,7 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
     @IBOutlet weak var tokenInputView: CLTokenInputView!
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var repo: Repo?
+    var shouldActiveTokenInputView = false
     var addingTokenProgrammatically = false
     
     override func viewDidLoad() {
@@ -32,6 +33,14 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
             tokenInputView.addToken(CLToken(displayText: tag.name, context: nil))
         }
         addingTokenProgrammatically = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if shouldActiveTokenInputView {
+            tokenInputView.beginEditing()
+        }
     }
 
     override func didReceiveMemoryWarning() {

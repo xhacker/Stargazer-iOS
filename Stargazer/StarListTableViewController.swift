@@ -180,20 +180,39 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     
     // MARK: - Tag list view delegate
     
-    func tagPressed(title: String) {
-        let viewController = storyboard?.instantiateViewControllerWithIdentifier("StarList") as! StarListTableViewController
-        viewController.title = title
-        viewController.predicate = NSPredicate(format: "ANY tags.name == %@", title)
-        navigationController?.pushViewController(viewController, animated: true)
+    func tagPressed(title: String, sender: TagListView) {
+        if title == "add tag..." {
+            performSegueWithIdentifier("showRepo", sender: sender)
+        }
+        else {
+            let viewController = storyboard?.instantiateViewControllerWithIdentifier("StarList") as! StarListTableViewController
+            viewController.title = title
+            viewController.predicate = NSPredicate(format: "ANY tags.name == %@", title)
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = tableView.indexPathForSelectedRow()!
-        let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
-        let webViewController = segue.destinationViewController as! StarWebViewController
-        webViewController.repo = starItem
+        if segue.identifier == "showRepoFromCell" {
+            let indexPath = tableView.indexPathForSelectedRow()!
+            let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+            let webViewController = segue.destinationViewController as! StarWebViewController
+            webViewController.repo = starItem
+        }
+        else if segue.identifier == "showRepo" {
+            let tagListView = sender as! TagListView
+            
+            // TagListView -> UITableViewCellContentView -> UITableViewCell
+            let cell = tagListView.superview?.superview as! UITableViewCell
+            
+            let indexPath = tableView.indexPathForCell(cell)!
+            let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
+            let webViewController = segue.destinationViewController as! StarWebViewController
+            webViewController.repo = starItem
+            webViewController.shouldActiveTokenInputView = true
+        }
     }
 
 }
