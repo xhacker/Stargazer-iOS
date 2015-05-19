@@ -90,12 +90,22 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         
         cell.tagListView.delegate = self
         cell.tagListView.removeAllTags()
+        let blueColor = UIColor(red:0.43, green:0.65, blue:0.91, alpha:1)
         if repo.tags.count > 0 {
+            cell.tagListView.tagBackgroundColor = blueColor
+            cell.tagListView.textColor = UIColor.whiteColor()
+            cell.tagListView.borderWidth = 0
+            
             for tag in repo.tags {
                 cell.tagListView.addTag(tag.name)
             }
         }
         else {
+            cell.tagListView.tagBackgroundColor = UIColor.clearColor()
+            cell.tagListView.textColor = blueColor
+            cell.tagListView.borderColor = blueColor
+            cell.tagListView.borderWidth = 1
+            
             cell.tagListView.addTag("add tag...")
         }
         
