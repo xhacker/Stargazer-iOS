@@ -29,13 +29,16 @@ class StarsTableViewController: UITableViewController {
     // cells in Stars section
     enum StarsCell: Int {
         case All = 0
+        case Languages
         case Untagged
-        static let count = 2
+        static let count = 3
         
         var title: String? {
             switch self {
             case .All:
                 return "All"
+            case .Languages:
+                return "Languages"
             case .Untagged:
                 return "Untagged"
             }
@@ -94,11 +97,16 @@ class StarsTableViewController: UITableViewController {
             cell.textLabel?.text = StarsCell(rawValue: indexPath.row)!.title
             switch StarsCell(rawValue: indexPath.row)! {
             case .All:
+                cell.imageView?.image = UIImage(named: "icon-all")
                 cell.detailTextLabel?.text = String(allRepos.count)
+            case .Languages:
+                cell.imageView?.image = UIImage(named: "icon-languages")
             case .Untagged:
+                cell.imageView?.image = UIImage(named: "icon-untagged")
                 cell.detailTextLabel?.text = String(untaggedRepos.count)
             }
         case .Tags:
+            cell.imageView?.image = UIImage(named: "icon-tag")
             cell.textLabel?.text = tags[indexPath.row].name
             cell.detailTextLabel?.text = String(tags[indexPath.row].repos.count)
         }
@@ -162,6 +170,8 @@ class StarsTableViewController: UITableViewController {
             switch StarsCell(rawValue: indexPath.row)! {
             case .All:
                 viewController.title = "All"
+            case .Languages:
+                viewController.title = "Languages"
             case .Untagged:
                 viewController.title = "Untagged"
                 viewController.predicate = NSPredicate(format: "tags.@count == 0")
