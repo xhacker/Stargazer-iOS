@@ -21,11 +21,19 @@ class StarListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        // HACK: avoid tag color change when cell is highlighted
+        tagListView.tagBackgroundColor = tagListView.tagBackgroundColor
+    }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        // HACK: avoid tag color change when cell is selected
+        tagListView.tagBackgroundColor = tagListView.tagBackgroundColor
     }
 
 }
