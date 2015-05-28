@@ -46,6 +46,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.sizeToFit()
+        searchController.searchBar.searchBarStyle = .Minimal
         tableView.tableHeaderView = searchController.searchBar
         definesPresentationContext = true
         
