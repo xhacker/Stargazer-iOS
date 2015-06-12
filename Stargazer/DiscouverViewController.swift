@@ -7,12 +7,28 @@
 //
 
 import UIKit
+import ZLSwipeableViewSwift
 
 class DiscouverViewController: UIViewController {
 
+    @IBOutlet weak var swipeableView: ZLSwipeableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        var views = 5
+        
+        swipeableView.nextView = {
+            if views <= 0 {
+                return nil
+            }
+            --views
+            
+            let view = CardView(frame: self.swipeableView.bounds)
+            return view
+        }
+//        swipeableView.numPrefetchedViews = 3
+        swipeableView.loadViews()
     }
 
     override func didReceiveMemoryWarning() {
