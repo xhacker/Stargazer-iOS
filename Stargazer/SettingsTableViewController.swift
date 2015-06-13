@@ -43,24 +43,24 @@ class SettingsTableViewController: UITableViewController {
         NSUserDefaults.standardUserDefaults().removeObjectForKey(kUserDefaultsFetchedKey)
         
         // remove all core data items
-        println("Removing repos...")
+        print("Removing repos...")
         let repoFetchRequest = NSFetchRequest(entityName: "Repo")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(repoFetchRequest, error: nil) as? [Repo] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(repoFetchRequest) as? [Repo] {
             for repo in fetchResults {
-                managedObjectContext!.deleteObject(repo)
+                managedObjectContext.deleteObject(repo)
             }
         }
         
-        println("Removing tags...")
+        print("Removing tags...")
         let tagFetchRequest = NSFetchRequest(entityName: "Tag")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(tagFetchRequest, error: nil) as? [Tag] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(tagFetchRequest) as? [Tag] {
             for tag in fetchResults {
-                managedObjectContext!.deleteObject(tag)
+                managedObjectContext.deleteObject(tag)
             }
         }
         
-        println("Saving...")
-        managedObjectContext!.save(nil)
+        print("Saving...")
+        try! managedObjectContext.save()
         
         tabBarController?.performSegueWithIdentifier("signIn", sender: self)
     }

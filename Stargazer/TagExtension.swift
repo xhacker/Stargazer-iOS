@@ -12,7 +12,7 @@ extension Tag {
     static func returnOrCreate(name: String, inContext context: NSManagedObjectContext) -> Tag {
         let fetchRequest = NSFetchRequest(entityName: "Tag")
         fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-        let fetchResults = context.executeFetchRequest(fetchRequest, error: nil) as! [Tag]
+        let fetchResults = try! context.executeFetchRequest(fetchRequest) as! [Tag]
         if fetchResults.count > 0 {
             return fetchResults[0]
         }

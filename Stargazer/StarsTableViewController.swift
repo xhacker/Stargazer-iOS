@@ -90,7 +90,7 @@ class StarsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
         switch Section(rawValue: indexPath.section)! {
         case .Stars:
@@ -143,18 +143,18 @@ class StarsTableViewController: UITableViewController {
     
     func reloadData() {
         let tagFetchRequest = NSFetchRequest(entityName: "Tag")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(tagFetchRequest, error: nil) as? [Tag] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(tagFetchRequest) as? [Tag] {
             tags = fetchResults
         }
         
         let allReposFetchRequest = NSFetchRequest(entityName: "Repo")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(allReposFetchRequest, error: nil) as? [Repo] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(allReposFetchRequest) as? [Repo] {
             allRepos = fetchResults
         }
         
         let untaggedReposFetchRequest = NSFetchRequest(entityName: "Repo")
         untaggedReposFetchRequest.predicate = NSPredicate(format: "tags.@count == 0")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(untaggedReposFetchRequest, error: nil) as? [Repo] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(untaggedReposFetchRequest) as? [Repo] {
             untaggedRepos = fetchResults
         }
     }
@@ -162,7 +162,7 @@ class StarsTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = tableView.indexPathForSelectedRow()!
+        let indexPath = tableView.indexPathForSelectedRow!
         let viewController = segue.destinationViewController as! StarListTableViewController
 
         switch Section(rawValue: indexPath.section)! {

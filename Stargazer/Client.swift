@@ -34,11 +34,11 @@ enum Router: URLRequestConvertible {
     // MARK: URLRequestConvertible
     
     var URLRequest: NSURLRequest {
-        let (path: String, parameters: [String: AnyObject]?) = {
+        let (path, parameters): (String, [String: AnyObject]?) = {
             switch self {
             case .Starred:
                 return ("/user/starred", nil)
-            case .URL(let URL):
+            case .URL:
                 return ("", nil)
             }
         }()
@@ -84,22 +84,22 @@ class Client: NSObject {
             if let response = response,
                 lastURLString = linkURLStringFromResponse(response, rel: "last"),
                 urlComponents = NSURLComponents(URL: NSURL(string: lastURLString)!, resolvingAgainstBaseURL: false),
-                queryItem = urlComponents.queryItems?.first as? NSURLQueryItem,
+                queryItem = urlComponents.queryItems?.first,
                 lastPage = queryItem.value {
-                self.numPages = lastPage.toInt()
+                self.numPages = Int(lastPage)
             }
             
             self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
         }
     }
     
-    func starPageResponseCallback(#request: NSURLRequest, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, progressCallback: (progress: Float?) -> Void) -> Void {
+    func starPageResponseCallback(request request: NSURLRequest?, response: NSHTTPURLResponse?, jsonObject: AnyObject?, error: NSError?, progressCallback: (progress: Float?) -> Void) -> Void {
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
             if let jsonObject = jsonObject as? NSArray {
                 let json = JSON(jsonObject)
                 
-                for (index: String, starItem: JSON) in json {
+                for (_, starItem): (String, JSON) in json {
                     self.stars.append([
                         "id": starItem["id"].intValue,
                         "name": starItem["name"].stringValue,
@@ -122,14 +122,14 @@ class Client: NSObject {
             }
             
             if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
-                println("Requesting next page (\(self.currentPage + 1))")
+                print("Requesting next page (\(self.currentPage + 1))")
                 Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
                     self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
                 }
             }
             else {
                 // last page
-                println("Last page")
+                print("Last page")
                 
                 self.saveStars()
                 
@@ -148,7 +148,7 @@ class Client: NSObject {
         
         var currentSet = Set<Int>()
         let fetchRequest = NSFetchRequest(entityName: "Repo")
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Repo] {
+        if let fetchResults = try! managedObjectContext.executeFetchRequest(fetchRequest) as? [Repo] {
             for repo in fetchResults {
                 currentSet.insert(repo.id.integerValue)
             }
@@ -157,12 +157,12 @@ class Client: NSObject {
         dispatch_async(dispatch_get_main_queue()) {
             // delete removed stars
             let removedSet = currentSet.subtract(downloadedSet)
-            println("Deleting removed stars: \(removedSet)")
+            print("Deleting removed stars: \(removedSet)")
             for id in removedSet {
                 let request = NSFetchRequest(entityName: "Repo")
                 request.predicate = NSPredicate(format: "id == %i", id)
-                if let results = self.managedObjectContext!.executeFetchRequest(request, error: nil) as? [Repo] {
-                    self.managedObjectContext!.deleteObject(results[0])
+                if let results = try! self.managedObjectContext.executeFetchRequest(request) as? [Repo] {
+                    self.managedObjectContext.deleteObject(results[0])
                 }
             }
             
@@ -170,8 +170,8 @@ class Client: NSObject {
             for star in self.stars {
                 if !currentSet.contains(star["id"] as! Int) {
                     let name = star["name"] as! String
-                    println("Saving new star: \(name)")
-                    Repo.createFromDictionary(star, inContext: self.managedObjectContext!)
+                    print("Saving new star: \(name)")
+                    Repo.createFromDictionary(star, inContext: self.managedObjectContext)
                 }
             }
         }
@@ -180,15 +180,14 @@ class Client: NSObject {
 
 
 // Courtesy of OctoKit, translated to Swift
-func linkURLStringFromResponse(response: NSHTTPURLResponse, #rel: String) -> String? {
+func linkURLStringFromResponse(response: NSHTTPURLResponse, rel: String) -> String? {
     let header = response.allHeaderFields
-    let linksString = header["Link"] as? String
     if let linksString = header["Link"] as? String {
-        if count(linksString) < 1 {
+        if linksString.characters.count < 1 {
             return nil
         }
         
-        let relPattern = NSRegularExpression(pattern: "rel=\\\"?([^\\\"]+)\\\"?", options: .CaseInsensitive, error: nil)
+        let relPattern = try! NSRegularExpression(pattern: "rel=\\\"?([^\\\"]+)\\\"?", options: .CaseInsensitive)
         
         let whitespaceAndBracketCharacterSet = NSCharacterSet.whitespaceCharacterSet().mutableCopy() as! NSMutableCharacterSet
         whitespaceAndBracketCharacterSet.addCharactersInString("<>")
@@ -201,11 +200,11 @@ func linkURLStringFromResponse(response: NSHTTPURLResponse, #rel: String) -> Str
             }
             
             let URLString = link.substringToIndex(semicolonRange!.startIndex).stringByTrimmingCharactersInSet(whitespaceAndBracketCharacterSet)
-            if count(URLString) == 0 {
+            if URLString.characters.count == 0 {
                 continue
             }
 
-            let result = relPattern!.firstMatchInString(link, options: nil, range: NSMakeRange(0, count(link)))
+            let result = relPattern.firstMatchInString(link, options: [], range: NSMakeRange(0, link.characters.count))
             if result == nil {
                 continue
             }

@@ -27,7 +27,7 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
             webView.loadRequest(NSURLRequest(URL: URL))
         }
         
-        println("Loading tags for \(repo!.name): \(repo!.tags)")
+        print("Loading tags for \(repo!.name): \(repo!.tags)")
         addingTokenProgrammatically = true
         for tag in repo!.tags {
             tokenInputView.addToken(CLToken(displayText: tag.name, context: nil))
@@ -67,9 +67,9 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
     
     func saveTokens() {
         let tags = tokenInputView.allTokens.map({ token in
-            Tag.returnOrCreate(token.displayText, inContext: self.managedObjectContext!)
+            Tag.returnOrCreate(token.displayText, inContext: self.managedObjectContext)
         })
-        println("Saving tags: \(tags)")
+        print("Saving tags: \(tags)")
         repo?.tags = NSSet(array: tags)
     }
     
@@ -78,7 +78,7 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
     }
     
     func addButton() -> UIButton {
-        let addButton = UIButton.buttonWithType(.ContactAdd) as! UIButton
+        let addButton = UIButton(type: .ContactAdd) as UIButton
         // TODO: add target action
         return addButton
     }

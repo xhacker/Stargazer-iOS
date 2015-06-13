@@ -23,7 +23,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         
         let frc = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: self.managedObjectContext!,
+            managedObjectContext: self.managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         
@@ -50,9 +50,10 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         tableView.tableHeaderView = searchController.searchBar
         definesPresentationContext = true
         
-        var error: NSError? = nil
-        if fetchedResultsController.performFetch(&error) == false {
-            print("An error occurred: \(error?.localizedDescription)")
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("An error occurred: \(error.localizedDescription)")
         }
     }
     
@@ -72,7 +73,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let sections = fetchedResultsController.sections {
-            let currentSection = sections[section] as! NSFetchedResultsSectionInfo
+            let currentSection = sections[section] as NSFetchedResultsSectionInfo
             return currentSection.numberOfObjects
         }
         
@@ -86,7 +87,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         cell.nameLabel.text = repo.name
         cell.languageLabel.text = repo.language
         cell.languageLabel.textColor = UIColor(red: 0.88, green: 0.31, blue: 0.22, alpha: 1)
-        cell.starsLabel.text = toString(repo.stargazers_count as? Int ?? 0)
+        cell.starsLabel.text = String(repo.stargazers_count)
         cell.descriptionLabel.text = repo.desc
         
         cell.tagListView.delegate = self
@@ -142,7 +143,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     func controller(controller: NSFetchedResultsController,
-        didChangeObject object: AnyObject,
+        didChangeObject object: NSManagedObject,
         atIndexPath indexPath: NSIndexPath?,
         forChangeType type: NSFetchedResultsChangeType,
         newIndexPath: NSIndexPath?) {
@@ -150,15 +151,12 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
             case .Insert:
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Update:
-                let cell = tableView.cellForRowAtIndexPath(indexPath!)
                 tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Move:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            default:
-                return
             }
     }
 
@@ -169,21 +167,22 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Search controller delegate
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchString = searchController.searchBar.text
+        let searchString = searchController.searchBar.text ?? ""
         let filter = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchString, searchString)
         let globalPredicate = self.predicate ?? NSPredicate(value: true)
         let compoundPredicate = NSCompoundPredicate.andPredicateWithSubpredicates([globalPredicate, filter])
         
-        if count(searchString) > 0 {
+        if searchString.characters.count > 0 {
             fetchedResultsController.fetchRequest.predicate = compoundPredicate
         }
         else {
             fetchedResultsController.fetchRequest.predicate = self.predicate
         }
         
-        var error: NSError? = nil
-        if fetchedResultsController.performFetch(&error) == false {
-            print("An error occurred: \(error?.localizedDescription)")
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("An error occurred: \(error.localizedDescription)")
         }
         
         tableView.reloadData()
@@ -207,7 +206,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showRepoFromCell" {
-            let indexPath = tableView.indexPathForSelectedRow()!
+            let indexPath = tableView.indexPathForSelectedRow!
             let starItem = fetchedResultsController.objectAtIndexPath(indexPath) as! Repo
             let webViewController = segue.destinationViewController as! StarWebViewController
             webViewController.repo = starItem
