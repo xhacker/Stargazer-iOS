@@ -33,7 +33,7 @@ enum Router: URLRequestConvertible {
     
     // MARK: URLRequestConvertible
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let (path, parameters): (String, [String: AnyObject]?) = {
             switch self {
             case .Starred:
@@ -80,16 +80,16 @@ class Client: NSObject {
         stars = []
         currentPage = 0
         
-        Alamofire.request(Router.Starred()).responseJSON { (request, response, jsonObject, error) in
-            if let response = response,
-                lastURLString = linkURLStringFromResponse(response, rel: "last"),
+        Alamofire.request(Router.Starred()).responseJSON { response in
+            if let urlResponse = response.response,
+                lastURLString = linkURLStringFromResponse(urlResponse, rel: "last"),
                 urlComponents = NSURLComponents(URL: NSURL(string: lastURLString)!, resolvingAgainstBaseURL: false),
                 queryItem = urlComponents.queryItems?.first,
                 lastPage = queryItem.value {
                 self.numPages = Int(lastPage)
             }
             
-            self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
+            self.starPageResponseCallback(request: response.request, response: response.response, jsonObject: response.result.value, error: response.result.error, progressCallback: progressCallback)
         }
     }
     
@@ -123,8 +123,8 @@ class Client: NSObject {
             
             if let response = response, nextURLString = linkURLStringFromResponse(response, rel: "next") {
                 print("Requesting next page (\(self.currentPage + 1))")
-                Alamofire.request(Router.URL(nextURLString)).responseJSON { (request, response, jsonObject, error) in
-                    self.starPageResponseCallback(request: request, response: response, jsonObject: jsonObject, error: error, progressCallback: progressCallback)
+                Alamofire.request(Router.URL(nextURLString)).responseJSON { response in
+                    self.starPageResponseCallback(request: response.request, response: response.response, jsonObject: response.result.value, error: response.result.error, progressCallback: progressCallback)
                 }
             }
             else {

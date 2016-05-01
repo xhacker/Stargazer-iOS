@@ -22,7 +22,7 @@ class DiscouverViewController: UIViewController {
             if views <= 0 {
                 return nil
             }
-            --views
+            views -= 1
             
             let view = CardView(frame: self.swipeableView.bounds)
             return view

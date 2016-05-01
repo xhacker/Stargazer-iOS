@@ -50,18 +50,18 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
     
     // MARK: - CLTokenInputViewDelegate
     
-    func tokenInputView(view: CLTokenInputView!, tokenForText text: String!) -> CLToken! {
+    func tokenInputView(view: CLTokenInputView, tokenForText text: String) -> CLToken? {
         let token = CLToken(displayText: text, context: nil)
         return token
     }
     
-    func tokenInputView(view: CLTokenInputView!, didAddToken token: CLToken!) {
+    func tokenInputView(view: CLTokenInputView, didAddToken token: CLToken) {
         if !addingTokenProgrammatically {
             saveTokens()
         }
     }
     
-    func tokenInputView(view: CLTokenInputView!, didRemoveToken token: CLToken!) {
+    func tokenInputView(view: CLTokenInputView, didRemoveToken token: CLToken) {
         saveTokens()
     }
     
@@ -73,7 +73,7 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
         repo?.tags = NSSet(array: tags)
     }
     
-    func tokenInputViewDidBeginEditing(view: CLTokenInputView!) {
+    func tokenInputViewDidBeginEditing(view: CLTokenInputView) {
         view.accessoryView = addButton()
     }
     
@@ -83,7 +83,7 @@ class StarWebViewController: UIViewController, CLTokenInputViewDelegate {
         return addButton
     }
     
-    func tokenInputViewDidEndEditing(view: CLTokenInputView!) {
+    func tokenInputViewDidEndEditing(view: CLTokenInputView) {
         view.accessoryView = nil
     }
 

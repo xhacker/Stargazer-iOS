@@ -1,57 +1,28 @@
 PODS:
-  - Alamofire (1.2.2)
-  - CLTokenInputView (1.1.0)
-  - KeychainAccess (1.2.1)
-  - SVProgressHUD (1.1.3)
-  - SwiftyJSON (2.2.0)
-  - TagListView (0.1.4)
-  - ZLSwipeableViewSwift (0.0.2)
+  - Alamofire (3.3.1)
+  - CLTokenInputView (2.3.0)
+  - KeychainAccess (2.3.5)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
+  - TagListView (1.0.0)
+  - ZLSwipeableViewSwift (0.0.6)
 
 DEPENDENCIES:
-  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
+  - Alamofire
   - CLTokenInputView
-  - KeychainAccess (from `https://github.com/kishikawakatsumi/KeychainAccess.git`,
-    branch `swift-2.0`)
+  - KeychainAccess
   - SVProgressHUD
-  - SwiftyJSON (from `https://github.com/andrelind/SwiftyJSON.git`)
+  - SwiftyJSON
   - TagListView
-  - ZLSwipeableViewSwift (from `https://github.com/zhxnlai/ZLSwipeableViewSwift.git`,
-    branch `swift-2`)
-
-EXTERNAL SOURCES:
-  Alamofire:
-    :branch: swift-2.0
-    :git: https://github.com/Alamofire/Alamofire.git
-  KeychainAccess:
-    :branch: swift-2.0
-    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
-  SwiftyJSON:
-    :git: https://github.com/andrelind/SwiftyJSON.git
-  ZLSwipeableViewSwift:
-    :branch: swift-2
-    :git: https://github.com/zhxnlai/ZLSwipeableViewSwift.git
-
-CHECKOUT OPTIONS:
-  Alamofire:
-    :commit: e1045f0e7713938320dbb5fef05166f7d6ef829a
-    :git: https://github.com/Alamofire/Alamofire.git
-  KeychainAccess:
-    :commit: 2f7cab8547e53d1d599464842c70dbb928272039
-    :git: https://github.com/kishikawakatsumi/KeychainAccess.git
-  SwiftyJSON:
-    :commit: 448a32ce5b4ef524ec1c812f5a84004c1a91a587
-    :git: https://github.com/andrelind/SwiftyJSON.git
-  ZLSwipeableViewSwift:
-    :commit: e598eb2f53ae706e881fb07a107281ea336e37d0
-    :git: https://github.com/zhxnlai/ZLSwipeableViewSwift.git
+  - ZLSwipeableViewSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
-  CLTokenInputView: 36a7519de77b3de1c7af24d9e105054d1fac8ee7
-  KeychainAccess: 3d7922baf90762a976adb7f6030d74c1a4110a1d
-  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
-  TagListView: 86fcd7616973096aeaaf71bf774eecacf483c1fb
-  ZLSwipeableViewSwift: 28b161ea3445ee380b684dd828a4d4bebc2a1f95
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  CLTokenInputView: 9dc1ffb7c9d2d81787e69a63c75bd97b0b2d1e76
+  KeychainAccess: e283c1981a6c5655e1984cd411c6faf16fa165ae
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TagListView: 6bf4bded034c4c90b1e90d8cd3d8e1d852dba0a8
+  ZLSwipeableViewSwift: f252438a48d20b1687eba0083762be4c13448da2
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.39.0

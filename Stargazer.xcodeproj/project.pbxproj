@@ -32,7 +32,7 @@
 		1AB43FD21B1D8CA400D0A940 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB43FD11B1D8CA400D0A940 /* CardView.swift */; };
 		1AC9D1121B07F5BA005BD335 /* RepoExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9D1111B07F5BA005BD335 /* RepoExtension.swift */; };
 		1AF3EF261AF89966008A47EC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF3EF251AF89966008A47EC /* TabBarViewController.swift */; };
-		9E14F872CE87E3A0E24CF2A7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155B52EC41644E3FBE7AB2E8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9E14F872CE87E3A0E24CF2A7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155B52EC41644E3FBE7AB2E8 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,6 +257,7 @@
 				1A198ABF1AF3563C009F9660 /* Frameworks */,
 				1A198AC01AF3563C009F9660 /* Resources */,
 				1A95B3E11B2BB9F3004DBE77 /* CopyFiles */,
+				C3DF295FAEAAAEEBFE148356 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -343,6 +344,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C3DF295FAEAAAEEBFE148356 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1A198ABE1AF3563C009F9660 /* Sources */ = {
@@ -501,6 +520,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Stargazer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "build.ela.$(PRODUCT_NAME:rfc1034identifier)";
@@ -516,6 +539,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Stargazer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "build.ela.$(PRODUCT_NAME:rfc1034identifier)";

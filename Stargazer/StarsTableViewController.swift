@@ -58,7 +58,7 @@ class StarsTableViewController: UITableViewController {
         
         reloadData()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "coreDataObjectsDidChange", name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(coreDataObjectsDidChange), name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
     }
 
     override func didReceiveMemoryWarning() {

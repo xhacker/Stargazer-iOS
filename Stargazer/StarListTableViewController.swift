@@ -143,7 +143,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     func controller(controller: NSFetchedResultsController,
-        didChangeObject object: NSManagedObject,
+        didChangeObject object: AnyObject,
         atIndexPath indexPath: NSIndexPath?,
         forChangeType type: NSFetchedResultsChangeType,
         newIndexPath: NSIndexPath?) {
@@ -170,7 +170,7 @@ class StarListTableViewController: UITableViewController, NSFetchedResultsContro
         let searchString = searchController.searchBar.text ?? ""
         let filter = NSPredicate(format: "name contains[cd] %@ OR desc contains[cd] %@", searchString, searchString)
         let globalPredicate = self.predicate ?? NSPredicate(value: true)
-        let compoundPredicate = NSCompoundPredicate.andPredicateWithSubpredicates([globalPredicate, filter])
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [globalPredicate, filter])
         
         if searchString.characters.count > 0 {
             fetchedResultsController.fetchRequest.predicate = compoundPredicate

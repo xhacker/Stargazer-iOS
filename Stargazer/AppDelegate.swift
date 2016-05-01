@@ -66,8 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             URLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             URLRequest.setValue("application/json", forHTTPHeaderField: "Accept")
             
-            Alamofire.request(URLRequest).responseJSON { (_, _, JSON, error) in
-                if let JSON = JSON as? [String: String] {                    
+            Alamofire.request(URLRequest).responseJSON { response in
+                if let JSON = response.result.value as? [String: String] {
                     let keychain = Keychain(service: kKeychainServiceName)
                     keychain[kKeychainGitHubTokenKey] = JSON["access_token"]
                     Router.OAuthToken = JSON["access_token"]
