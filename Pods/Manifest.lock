@@ -1,0 +1,28 @@
+PODS:
+  - Alamofire (3.3.1)
+  - CLTokenInputView (2.3.0)
+  - KeychainAccess (2.3.5)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
+  - TagListView (1.0.0)
+  - ZLSwipeableViewSwift (0.0.6)
+
+DEPENDENCIES:
+  - Alamofire
+  - CLTokenInputView
+  - KeychainAccess
+  - SVProgressHUD
+  - SwiftyJSON
+  - TagListView
+  - ZLSwipeableViewSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  CLTokenInputView: 9dc1ffb7c9d2d81787e69a63c75bd97b0b2d1e76
+  KeychainAccess: e283c1981a6c5655e1984cd411c6faf16fa165ae
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TagListView: 6bf4bded034c4c90b1e90d8cd3d8e1d852dba0a8
+  ZLSwipeableViewSwift: f252438a48d20b1687eba0083762be4c13448da2
+
+COCOAPODS: 0.39.0
